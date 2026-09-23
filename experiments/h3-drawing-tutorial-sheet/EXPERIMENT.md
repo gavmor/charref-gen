@@ -193,3 +193,16 @@ to keep iterating (untested idea: reframe away from "tutorial video"
 entirely) or take a different approach (e.g. crop to the two clean
 endpoint panels only) before spending more GPU time on more prompt
 guesses.**
+
+## Generalization retest: second non-human subject with full-body reference (fbot)
+
+**Confound in prior constbot run:**
+The initial constbot generalization run (`charref-drawing-tutorial-validate-constbot`) used `constbot_reference_still.png`, which was extracted from frame 0 of `constbot_00002_.mp4`. Frame 0 was Shot 1 (head-and-shoulders closeup) rather than a full-body view. While H3 generated a plausible full-body construction sequence, the run was confounded because the reference image itself lacked full-body ground truth.
+
+**Retest on second non-human subject (`fbot`):**
+- Subject: `fbot` ("a Regime fighting robot chassis, humanoid frame, plated armor, weapon-mounted forearm", category "robot" per `data/roster.json`).
+- Reference still (`fbot_reference_still.png`): extracted from Shot 2 (Front, t=2.375s) of `fbot_00002_.mp4`, showing the complete humanoid robot chassis from head to feet in full-body A-pose.
+- Paper background endpoint (`fbot_reference_paper_bg.png`): generated via `edit-image` (Krea 2 Identity Edit LoRA, seed 313704014) replacing the scene background with clean aged parchment.
+- Parameters held constant: seed (900001), 124 frames @ 24fps (480x864), 8-step turbo LoRA, blank parchment first frame (`blank_canvas_paper.png`), 8-stage extraction (`extract_and_compose_tutorial_sheet.py`).
+- Pipeline job: `charref-drawing-tutorial-validate-fbot`.
+
