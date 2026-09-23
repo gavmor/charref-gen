@@ -144,11 +144,11 @@ jobs:
                   sleep 3
                   HIST=$(curl -sf "$COMFYUI_LOCAL_URL/history/$PROMPT_ID") || continue
                   if [ "$HIST" != "{}" ]; then
-                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].status.completed\')
+                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].status.completed')
                     if [ "$STATUS" = "true" ]; then
                       COMPLETED=true
-                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].gifs[0].filename\')
-                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""\')
+                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].gifs[0].filename')
+                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""')
                       if [ -z "$COMFY_FILE" ] || [ "$COMFY_FILE" = "null" ]; then
                         echo "FAILED: $SLUG completed but no video filename in outputs.612"; exit 1
                       fi
@@ -160,8 +160,8 @@ jobs:
                         || { echo "FAILED to fetch $SLUG"; exit 1; }
                       echo "VIDEO_RESULT slug=$SLUG comfy_filename=$COMFY_FILE prompt_id=$PROMPT_ID"
                       break
-                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" \'.[$id].status.status_str == "error"\' >/dev/null 2>&1; then
-                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" \'.[$id].status\')"; exit 1
+                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" '.[$id].status.status_str == "error"' >/dev/null 2>&1; then
+                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" '.[$id].status')"; exit 1
                     fi
                   fi
                 done
@@ -308,11 +308,11 @@ jobs:
                   sleep 3
                   HIST=$(curl -sf "$COMFYUI_LOCAL_URL/history/$PROMPT_ID") || continue
                   if [ "$HIST" != "{}" ]; then
-                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].status.completed\')
+                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].status.completed')
                     if [ "$STATUS" = "true" ]; then
                       COMPLETED=true
-                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename\')
-                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""\')
+                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename')
+                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""')
                       if [ -z "$COMFY_FILE" ] || [ "$COMFY_FILE" = "null" ]; then
                         echo "FAILED: $SLUG completed but no video filename in outputs.612"; exit 1
                       fi
@@ -324,8 +324,8 @@ jobs:
                         || { echo "FAILED to fetch $SLUG"; exit 1; }
                       echo "VIDEO_RESULT slug=$SLUG comfy_filename=$COMFY_FILE prompt_id=$PROMPT_ID"
                       break
-                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" \'.[$id].status.status_str == "error"\' >/dev/null 2>&1; then
-                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" \'.[$id].status\')"; exit 1
+                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" '.[$id].status.status_str == "error"' >/dev/null 2>&1; then
+                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" '.[$id].status')"; exit 1
                     fi
                   fi
                 done
@@ -456,11 +456,11 @@ jobs:
                   sleep 3
                   HIST=$(curl -sf "$COMFYUI_LOCAL_URL/history/$PROMPT_ID") || continue
                   if [ "$HIST" != "{}" ]; then
-                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].status.completed\')
+                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].status.completed')
                     if [ "$STATUS" = "true" ]; then
                       COMPLETED=true
-                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename\')
-                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""\')
+                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename')
+                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""')
                       if [ -z "$COMFY_FILE" ] || [ "$COMFY_FILE" = "null" ]; then
                         echo "FAILED: $SLUG completed but no video filename in outputs.612"; exit 1
                       fi
@@ -472,8 +472,8 @@ jobs:
                         || { echo "FAILED to fetch $SLUG"; exit 1; }
                       echo "VIDEO_RESULT slug=$SLUG comfy_filename=$COMFY_FILE prompt_id=$PROMPT_ID"
                       break
-                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" \'.[$id].status.status_str == "error"\' >/dev/null 2>&1; then
-                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" \'.[$id].status\')"; exit 1
+                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" '.[$id].status.status_str == "error"' >/dev/null 2>&1; then
+                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" '.[$id].status')"; exit 1
                     fi
                   fi
                 done
@@ -596,11 +596,11 @@ jobs:
                   sleep 3
                   HIST=$(curl -sf "$COMFYUI_LOCAL_URL/history/$PROMPT_ID") || continue
                   if [ "$HIST" != "{}" ]; then
-                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].status.completed\')
+                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].status.completed')
                     if [ "$STATUS" = "true" ]; then
                       COMPLETED=true
-                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename\')
-                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""\')
+                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename')
+                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""')
                       if [ -z "$COMFY_FILE" ] || [ "$COMFY_FILE" = "null" ]; then
                         echo "FAILED: $SLUG completed but no video filename in outputs.612"; exit 1
                       fi
@@ -612,8 +612,8 @@ jobs:
                         || { echo "FAILED to fetch $SLUG"; exit 1; }
                       echo "VIDEO_RESULT slug=$SLUG comfy_filename=$COMFY_FILE prompt_id=$PROMPT_ID"
                       break
-                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" \'.[$id].status.status_str == "error"\' >/dev/null 2>&1; then
-                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" \'.[$id].status\')"; exit 1
+                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" '.[$id].status.status_str == "error"' >/dev/null 2>&1; then
+                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" '.[$id].status')"; exit 1
                     fi
                   fi
                 done
@@ -743,11 +743,11 @@ jobs:
                   sleep 3
                   HIST=$(curl -sf "$COMFYUI_LOCAL_URL/history/$PROMPT_ID") || continue
                   if [ "$HIST" != "{}" ]; then
-                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].status.completed\')
+                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].status.completed')
                     if [ "$STATUS" = "true" ]; then
                       COMPLETED=true
-                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename\')
-                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""\')
+                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename')
+                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""')
                       if [ -z "$COMFY_FILE" ] || [ "$COMFY_FILE" = "null" ]; then
                         echo "FAILED: $SLUG completed but no video filename in outputs.612"; exit 1
                       fi
@@ -759,8 +759,8 @@ jobs:
                         || { echo "FAILED to fetch $SLUG"; exit 1; }
                       echo "VIDEO_RESULT slug=$SLUG comfy_filename=$COMFY_FILE prompt_id=$PROMPT_ID"
                       break
-                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" \'.[$id].status.status_str == "error"\' >/dev/null 2>&1; then
-                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" \'.[$id].status\')"; exit 1
+                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" '.[$id].status.status_str == "error"' >/dev/null 2>&1; then
+                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" '.[$id].status')"; exit 1
                     fi
                   fi
                 done
@@ -882,11 +882,11 @@ jobs:
                   sleep 3
                   HIST=$(curl -sf "$COMFYUI_LOCAL_URL/history/$PROMPT_ID") || continue
                   if [ "$HIST" != "{}" ]; then
-                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].status.completed\')
+                    STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].status.completed')
                     if [ "$STATUS" = "true" ]; then
                       COMPLETED=true
-                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename\')
-                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""\')
+                      COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].gifs[0].filename')
+                      COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""')
                       if [ -z "$COMFY_FILE" ] || [ "$COMFY_FILE" = "null" ]; then
                         echo "FAILED: $SLUG completed but no video filename in outputs.612"; exit 1
                       fi
@@ -898,8 +898,8 @@ jobs:
                         || { echo "FAILED to fetch $SLUG"; exit 1; }
                       echo "VIDEO_RESULT slug=$SLUG comfy_filename=$COMFY_FILE prompt_id=$PROMPT_ID"
                       break
-                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" \'.[$id].status.status_str == "error"\' >/dev/null 2>&1; then
-                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" \'.[$id].status\')"; exit 1
+                    elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" '.[$id].status.status_str == "error"' >/dev/null 2>&1; then
+                      echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" '.[$id].status')"; exit 1
                     fi
                   fi
                 done
@@ -1009,11 +1009,11 @@ jobs:
                     sleep 3
                     HIST=$(curl -sf "$COMFYUI_LOCAL_URL/history/$PROMPT_ID") || continue
                     if [ "$HIST" != "{}" ]; then
-                      STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].status.completed\')
+                      STATUS=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].status.completed')
                       if [ "$STATUS" = "true" ]; then
                         COMPLETED=true
-                        COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].gifs[0].filename\')
-                        COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" \'.[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""\')
+                        COMFY_FILE=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].images[0].filename // .[$id].outputs["612"].video[0].filename // .[$id].outputs["612"].videos[0].filename // .[$id].outputs["612"].gifs[0].filename')
+                        COMFY_SUBFOLDER=$(echo "$HIST" | jq -r --arg id "$PROMPT_ID" '.[$id].outputs["612"].images[0].subfolder // .[$id].outputs["612"].video[0].subfolder // .[$id].outputs["612"].videos[0].subfolder // .[$id].outputs["612"].gifs[0].subfolder // ""')
                         if [ -z "$COMFY_FILE" ] || [ "$COMFY_FILE" = "null" ]; then
                           echo "FAILED: $SLUG completed but no video filename in outputs.612"; exit 1
                         fi
@@ -1025,8 +1025,8 @@ jobs:
                           || { echo "FAILED to fetch $SLUG"; exit 1; }
                         echo "VIDEO_RESULT slug=$SLUG comfy_filename=$COMFY_FILE prompt_id=$PROMPT_ID"
                         break
-                      elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" \'.[$id].status.status_str == "error"\' >/dev/null 2>&1; then
-                        echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" \'.[$id].status\')"; exit 1
+                      elif [ "$STATUS" = "false" ] && echo "$HIST" | jq -e --arg id "$PROMPT_ID" '.[$id].status.status_str == "error"' >/dev/null 2>&1; then
+                        echo "FAILED: $SLUG -- comfyui-local execution error: $(echo "$HIST" | jq -c --arg id "$PROMPT_ID" '.[$id].status')"; exit 1
                       fi
                     fi
                   done
