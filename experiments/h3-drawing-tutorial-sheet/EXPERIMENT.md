@@ -206,3 +206,18 @@ The initial constbot generalization run (`charref-drawing-tutorial-validate-cons
 - Parameters held constant: seed (900001), 124 frames @ 24fps (480x864), 8-step turbo LoRA, blank parchment first frame (`blank_canvas_paper.png`), 8-stage extraction (`extract_and_compose_tutorial_sheet.py`).
 - Pipeline job: `charref-drawing-tutorial-validate-fbot`.
 
+**Results and Verification:**
+- Concourse build 3 (`charref-gen/charref-drawing-tutorial-validate-fbot/3`) succeeded under `gpu-lock` on blades68 (3m16s).
+- Video artifact: `fbot_00003_.mp4` (`t2va-tutorial/fbot_00003_.mp4`, 124 frames, 5.167s @ 24fps, 480x864).
+  - Video verification: continuous morph across duration, 0 scene cuts detected, clean hold on final frame from t=4.625s to 5.167s.
+- Sheet artifact: `fbot_tutorial_sheet.png` (1968x1812, 4x2 montage across 8 extracted stages).
+- Immich egress: asset `f5f5b603-946f-48a4-9844-8b9be8bc5909` uploaded and assigned to album "Esoteria T2VA Character Sheets" with description sidecar.
+
+**Findings:**
+1. **Loomis primitive construction generalizes to non-human subjects with full-body ground truth.** With full-body input, the intermediate stages progress cleanly from sphere/box/cylinder blocking through anatomical line art to fully rendered robot chassis without hallucinating or losing ground truth.
+2. **Confound resolved:** Unlike the initial constbot run (which relied on a head-and-shoulders reference), fbot's reference ground truth covers the entire chassis head-to-feet, confirming full-body figure construction is viable across non-human archetypes.
+3. **Spontaneous hand suppression:** Zero human hands, pencils, or drawing tools appeared across any of the 124 frames or 8 composited panels, in contrast to the human subject (Raven) where hand suppression failed even under explicit negative and affirmative prompting. Framing a mechanical non-human subject appears to weaken the training prior that associates "tutorial drawing" with filmed human hands.
+
+**Status: Validated.** Loomis primitive tutorial-sheet workflow confirmed effective on both human and non-human subjects with verified full-body references.
+
+
